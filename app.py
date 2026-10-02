@@ -1,9 +1,15 @@
-from decimal import Decimal
-from fractions import Fraction
+def salalomlash(ism):
+    return f"salom {ism}"
 
-a = Decimal('0.2') + Decimal(0.2)
+# m = salalomlash
+# print(m("Ali"), m.__name__)
 
-print(a)
+def uch_marta(funk,ism):
+    return funk(ism),funk(ism),funk(ism)
 
-b = Fraction(1,3) + Fraction(1,6)
-print(b)
+print(uch_marta(salalomlash, "ali"))
+
+
+amaliy = [len, str.upper,str.lower]
+for a in amaliy:
+    print(a("Subhonbek"))
