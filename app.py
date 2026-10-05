@@ -13,3 +13,5 @@ print(uch_marta(salalomlash, "ali"))
 amaliy = [len, str.upper,str.lower]
 for a in amaliy:
     print(a("Subhonbek"))
+
+    
