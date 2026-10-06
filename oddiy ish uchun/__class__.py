@@ -1,392 +1,199 @@
 # 1
-class Uchuvchi:
-    def harakat(self):
-        return "uchyabdi"
+def tabriklash(ism):
+    return f"Tabriklaymiz {ism}"
 
+o = tabriklash
+print(o("Ali"))
+print(o.__name__, tabriklash.__name__)
 
-class Suzuvchi:
-    def harakat(self):
-        return "suzyabdi"
-
-
-class Goz(Uchuvchi, Suzuvchi):
-    pass
-
-
-class Goz2(Suzuvchi, Uchuvchi):
-    pass
-
-
-o = Goz()
-o2 = Goz2()
-print(o.harakat())
-print(o2.harakat())
-
-for k in Goz.__mro__:
-    print(k.__name__)
-for k in Goz2.__mro__:
-    print(k.__name__)
-
+amal = [str.upper, str.lower,len]
+for i in amal:
+    print(i("Toshkent"))
 
 # 2
-class Odam:
-    pass
+def uch_marta(funk, x):
+    return funk(funk(funk(x)))
 
+def qosh10(son):
+    return son + 10
 
-class Talaba(Odam):
-    pass
+def ikkilantir(son):
+    return son * 2
 
-
-class Ishchi(Odam):
-    pass
-
-
-class IshlovchiTalaba(Talaba, Ishchi):
-    pass
-
-
-i = IshlovchiTalaba()
-for k in IshlovchiTalaba.__mro__:
-    print(k.__name__)
-print(len(IshlovchiTalaba.__mro__), "ta klass")
-
+print(uch_marta(qosh10, 5))      
+print(uch_marta(ikkilantir, 5))  
+print(uch_marta(str.upper, "salom"))  
 
 # 3
-class Odam2:
-    def __init__(self, ism, **kw):
-        self.ism = ism
-        super().__init__(**kw)
+def darajaga(n):
+    def ichki(son):
+        return son ** n
+    return ichki
+kvadrat = darajaga(2)
+kub = darajaga(3)
+print(kvadrat(5))
+print(kub(5))
 
-    def tanish(self):
-        print("Odam")
+# 4 
+def darajaga(n):
+    def daraja(x):
+        return x ** n
+    return daraja
 
+kub = darajaga(3)
+print(kub(2))                      
 
-class Talaba2(Odam2):
-    def __init__(self, ism, guruh, **kw):
-        self.guruh = guruh
-        super().__init__(ism, **kw)
-
-    def tanish(self):
-        print("Talaba:", self.guruh)
-        super().tanish()
-
-
-class Ishchi2(Odam2):
-    def __init__(self, ism, maosh, **kw):
-        self.maosh = maosh
-        super().__init__(ism, **kw)
-
-    def tanish(self):
-        print("Ishchi:", self.maosh)
-        super().tanish()
+print(kub.__closure__)             
+print(len(kub.__closure__))        
 
 
-class IshlovchiTalaba2(Talaba2, Ishchi2):
-    def tanish(self):
-        print("Ishlovchi talaba")
-        super().tanish()
+print(kub.__closure__[0].cell_contents) 
 
+def oddiy(x):
+    return x * 2
 
-i2 = IshlovchiTalaba2(ism="Ali", guruh="2-kurs", maosh=5000000)
-i2.tanish()
-for k in IshlovchiTalaba2.__mro__:
-    print(k.__name__)
-
-
-# 4
-class A:
-    pass
-
-
-class B(A):
-    pass
-
-
-class X(B, A):
-    pass
-
-
-for k in X.__mro__:
-    print(k.__name__)
-
-try:
-    class Y(A, B):
-        pass
-except TypeError as e:
-    print("TypeError:", e)
-
+print(oddiy.__closure__)
 
 # 5
-class Qurilma:
-    def yoq(self):
-        return "Quqishni boshladim"
-
-
-class Telefon(Qurilma):
-    def yoq(self):
-        return "Telefon yoqdi"
-
-
-class Kamera(Qurilma):
-    def yoq(self):
-        return "Kamera yoqdi"
-
-
-class Smartfon(Telefon, Kamera):
-    pass
-
-
-print(Smartfon().yoq())
-mro = [k.__name__ for k in Smartfon.__mro__]
-print(mro)
-print("Quqilma necha marta:", mro.count("Qurilma"))
-
+def hisoblagich():
+    jami = 0
+    def qoshish(son):
+        nonlocal jami
+        jami += son
+        return jami
+    return qoshish
+h = hisoblagich()
+print(h(10000))
+print(h(8000))
+print(h(3000))
 
 # 6
-class Qurilma2:
-    def yoq(self):
-        print("Qurilma: hammasi tayyor")
-
-
-class Telefon2(Qurilma2):
-    def yoq(self):
-        print("Telefon: ekran yondi")
-        super().yoq()
-
-
-class Kamera2(Qurilma2):
-    def yoq(self):
-        print("Kamera: suratga tayyor")
-        super().yoq()
-
-
-class Smartfon2(Telefon2, Kamera2):
-    def yoq(self):
-        print("Smartfon: quqish boshlandi")
-        super().yoq()
-
-
-Smartfon2().yoq()
-
+def parol_tekshir(togri_parol):
+    urunishlar_soni = 0
+    def kirish(kiritish):
+        nonlocal urunishlar_soni
+        if urunishlar_soni >= togri_parol:
+            return "dastur tugadi"
+        urunishlar_soni += 1
+        return f"{kiritish}({urunishlar_soni}/{togri_parol}) ta urunishlar qoldi"
+    return kirish
+parol = parol_tekshir(2)
+print(parol("Ali"))
 
 # 7
-class Odam3:
-    def __init__(self, ism, **kw):
-        self.ism = ism
-        super().__init__(**kw)
+def chiziq(funk):
+    def orob():
+        print("*"*15)
+        funk()
+        print("*"*15)
+    return orob
+def xabar():
+    print("dars boshlandi")
 
-
-class Talaba3(Odam3):
-    def __init__(self, guruh, **kw):
-        self.guruh = guruh
-        super().__init__(**kw)
-
-
-class Ishchi3(Odam3):
-    def __init__(self, maosh, **kw):
-        self.maosh = maosh
-        super().__init__(**kw)
-
-
-class IshlovchiTalaba3(Talaba3, Ishchi3):
-    pass
-
-
-i3 = IshlovchiTalaba3(ism="Ali", guruh="2-kurs", maosh=5000000)
-print(i3.ism, i3.guruh, i3.maosh)
-
+xabar = chiziq(xabar)
+xabar()
 
 # 8
-import json
 
+def chiziq(funk):
+    def orob():
+        print("[    boshlandi   ]")
+        funk()
+        print("[     tugadi     ]")
+    return orob
+def nuqta(funk):
+    def orob():
+        print("...")
+        funk()
+        print("...")
+    return orob
+@chiziq
+@nuqta
 
-class JSONMixin:
-    def to_json(self):
-        return json.dumps(self.__dict__, ensure_ascii=False)
+def salom():
+    print("salom Ali")
 
-
-class Mahsulot(JSONMixin):
-    def __init__(self, nom, narx):
-        self.nom = nom
-        self.narx = narx
-
-
-m = Mahsulot("Choy qoshiq", 12000)
-print(m.to_json())
-print(type(m.to_json()))
-
+salom()
 
 # 9
-class LogMixin:
-    def log(self, xabar):
-        print(f"[{type(self).__name__}] {xabar}")
+
+def bezash(func):
+    def wrapper(*args, **kwargs):
+        print("Funksiya nomi:", func.__name__)
+        natija = func(*args, **kwargs)
+        return natija
+    return wrapper
 
 
-class Kitob(JSONMixin, LogMixin):
-    def __init__(self, nom, muallif, narx):
-        self.nom = nom
-        self.muallif = muallif
-        self.narx = narx
-
-
-k = Kitob("O'tkan kunlar", "Abdulla Qodiriy", 45000)
-print(k.to_json())
-k.log("kitob qo'shildi")
-for kl in Kitob.__mro__:
-    print(kl.__name__)
-
+@bezash
+def kopaytir(a, b):
+    return a * b
+print(kopaytir(6, 7))   
 
 # 10
-class Xabar:
-    def matn(self):
-        return "salom"
+from functools import wraps
 
 
-class QavsMixin:
-    def matn(self):
-        return "[" + super().matn() + "]"
+def bezash(func):
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+    return wrapper
+
+@bezash
+def salom():
+    """Bu salom funksiyasi"""
+    return "Salom"
+
+print(salom.__name__)   
+print(salom.__doc__)    
+
+def bezash2(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+    return wrapper
+
+@bezash2
+def salom2():
+    return "Salom"
 
 
-class YulduzMixin:
-    def matn(self):
-        return "*" + super().matn() + "*"
-
-
-class Xabar1(QavsMixin, YulduzMixin, Xabar):
-    pass
-
-
-class Xabar2(YulduzMixin, QavsMixin, Xabar):
-    pass
-
-
-print(Xabar1().matn())
-print(Xabar2().matn())
-
+print(salom2.__name__) 
+print(salom2.__doc__)  
 
 # 11
-class Dvigatel:
-    def ishga_tushir(self):
-        return "Dvigatel ishga tushdi"
+import time
+from functools import wraps
 
 
-class ElektrDvigatel:
-    def ishga_tushir(self):
-        return "Elektr dvigatel jimgina ishga tushdi"
+def timer(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        boshlanish = time.perf_counter()
+        natija = func(*args, **kwargs)
+        tugash = time.perf_counter()
+        print(f"{func.__name__} vaqti: {tugash - boshlanish:.4f} soniya")
+        return natija
+    return wrapper
+
+@timer
+def kvadratlar(n):
+    return [i ** 2 for i in range(n)]
+
+@timer
+def kvadratlar_sikl(n):
+    natija = []
+    for i in range(n):
+        natija.append(i ** 2)
+    return natija
 
 
-class Mashina:
-    def __init__(self, dvigatel=None):
-        self.dvigatel = dvigatel if dvigatel else Dvigatel()
-
-    def yur(self):
-        return self.dvigatel.ishga_tushir() + " -> mashina yurdi"
-
-
-mashina = Mashina()
-print(mashina.yur())
-
-mashina.dvigatel = ElektrDvigatel()
-print(mashina.yur())
-
+n = 1_000_000
+kvadratlar(n)
+kvadratlar_sikl(n)
 
 # 12
-print("Talaba/Odam -> is-a")
-print("Kitob/Muallif -> has-a")
-print("Kitob/JSON -> can-do")
-print("Mashina/Gildirak -> has-a")
-print("Ordak/Qush -> is-a")
-print("Xodim/Loglash -> can-do")
 
-
-class Xodim:
-    def __init__(self, ism):
-        self.ism = ism
-
-
-class Oshpaz(Xodim):
-    pass
-
-
-class Gildirak:
-    def __init__(self):
-        self.ogirlik = 15
-
-
-class Ttransport:
-    def __init__(self):
-        self.gildirak = Gildirak()
-
-
-class Ofitsiant(JSONMixin, Xodim):
-    pass
-
-
-print(Oshpaz("Ali").ism)
-print(Ttransport().gildirak.ogirlik)
-print(Ofitsiant("Laylo").to_json())
-
-
-# 13
-class Odam4:
-    def __init__(self, ism, **kw):
-        self.ism = ism
-        super().__init__(**kw)
-
-    def tanish(self):
-        print(f"Ism: {self.ism}")
-
-
-class TalabaMixin:
-    def __init__(self, guruh, **kw):
-        self.guruh = guruh
-        super().__init__(**kw)
-
-    def tanish(self):
-        print(f"Guruh: {self.guruh}")
-        super().tanish()
-
-
-class OqituvchiMixin:
-    def __init__(self, fan, **kw):
-        self.fan = fan
-        super().__init__(**kw)
-
-    def tanish(self):
-        print(f"Fan: {self.fan}")
-        super().tanish()
-
-
-class Assistent(JSONMixin, LogMixin, TalabaMixin, OqituvchiMixin, Odam4):
-    pass
-
-
-a = Assistent(ism="Ali", guruh="2-kurs", fan="Python")
-a.tanish()
-print(a.to_json())
-a.log("darsga tayyorlanmoqda")
-
-for kl in Assistent.__mro__:
-    print(kl.__name__)
-print("Odam necha marta:", [k.__name__ for k in Assistent.__mro__].count("Odam4"))
-
-
-class Kurs:
-    def __init__(self, nom):
-        self.nom = nom
-        self.talabalar = []
-
-    def qosh(self, odam):
-        self.talabalar.append(odam)
-
-    def royxat(self):
-        print(f"{self.nom} kursida {len(self.talabalar)} ta o'quvchi:")
-        for o in self.talabalar:
-            print(" -", o.ism)
-
-
-kurs = Kurs("Python asoslari")
-kurs.qosh(a)
-kurs.qosh(Assistent(ism="Laylo", guruh="1-kurs", fan="Algoritmlar"))
-kurs.qosh(Assistent(ism="Sardor", guruh="3-kurs", fan="Ma'lumotlar bazasi"))
-kurs.royxat()
+"""
+nima qilishni tushunmadim
+"""
