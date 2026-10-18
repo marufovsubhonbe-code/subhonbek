@@ -192,6 +192,7 @@ n = 1_000_000
 kvadratlar(n)
 kvadratlar_sikl(n)
 
+
 # 12
 
 """
