@@ -47,3 +47,5 @@ c.execute("""
 DELETE FROM student where id = 1
 """)
 con.commit()
+
+print("yangisi")
