@@ -35,7 +35,8 @@ import pyautogui
 import time
 
 time.sleep(5)
-for i in range(100):
-    pyautogui.write("ooooooooooooooooooooo") 
+for i in range(1000):
+    pyautogui.write("salom nima gap ko't") 
     pyautogui.press("enter")
     time.sleep(0.01)
+print("dastur to'xtadi")
