@@ -6,7 +6,7 @@ conn = psycopg2.connect(
     host = "127.0.0.1",
     database = "loyiha",
     user="postgres",
-    password="20110915"
+    password="20110915"     
 )
 
 asosiy = conn.cursor()
