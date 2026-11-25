@@ -5,7 +5,6 @@ import psycopg2
 conn = psycopg2.connect(
     host = "127.0.0.1",
     database = "loyiha",
-    user="postgres",
     password="20110915"     
 )
 
@@ -44,9 +43,15 @@ asosiy = conn.cursor()
 #     CREATE TABLE xizmatlar(
 #     id SERIAL PRIMARY KEY,
 #     xizmat_nomi varchar(100),
-#     xizmat_narxi integer)
+#     xizmat_narxi integer,
+#     xizmatlar_id bigint REFERENCES mashinalar(id)
+#     )
 # """)
 
+# asosiy.execute("""
+#     ALTER TABLE xizmatlar
+#     ADD COLUMN mashinalar_id BIGINT REFERENCES mashinalar(id);
+# """)
 # conn.commit()
 
 # asosiy.execute("""
@@ -327,16 +332,6 @@ from time import sleep
 
 def hammasi():
     while True:
-        
-        
-        print("" \
-        "iltimos kodga kutishni qo'shgan man shuni uchun siz shoshilib/" \
-        " ketimasdan yozing iltimos")\
-        \
-        \
-        \
-        
-        sleep(5)
         menu()
         tanlash = int(input("tanlang: "))
         if tanlash == 1:
